@@ -4,11 +4,12 @@ an optional foldtext.
 
 ### Installation
 Using your favourite package manager
-```
+```lua
 # vim-plug
 Plug 'nvim-treesitter-pyfold'
 
 # Packer
+require('packer').setup {
     ...
     use 'eddiebergman/nvim-treesitter-pyfold'
     ...
@@ -29,5 +30,44 @@ require('nvim-treesitter.configs').setup {
 ```
 
 ### Example
-TODO
+![Example of folding](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/folding.png)
+
+### TODO
+* Getting multiple imports to fold into one line, if anyone is aware how to do
+    this with treesitter, please feel free to drop an issue!
+```Python
+# Code
+import one
+import two
+import three
+from x import y
+import a as b
+from z import ( 
+    alpha, beta, phi
+)
+
+# Desired
+-- imports
+```
+
+* List, Dict folding
+```Python
+# Code
+my_dict = {
+    'k1' : 'v1'
+    'k2' : 'v2'
+}
+
+my_list = [
+    'item1',
+    'item2'
+]
+
+# Desired
+my_dict = { ... }
+
+my_list = [ ... ]
+```
+
+
 
