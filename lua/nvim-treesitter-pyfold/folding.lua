@@ -6,13 +6,15 @@ local api = vim.api
 local fn = vim.fn
 local exec = vim.api.nvim_exec
 
+local rtp_search_str = '**/nvim-treesitter-pyfold/queries/python/folds.scm'
+
 local M = {
     cache = {}
 }
 
 local function folds_path()
     if M.cache['fold_path'] == nil then
-        M.cache['fold_path'] = api.nvim_get_runtime_file('nvim-treesitter-pyfold/queries/python/folds.scm', true)[1]
+        M.cache['fold_path'] = api.nvim_get_runtime_file(rtp_search_str, false)[1]
     end
 
     return M.cache['fold_path']
