@@ -55,11 +55,15 @@ function M.is_supported(lang)
     return lang == 'python'
 end
 
-local function isdocfold(s, e)
+local function is_doc_fold(s, e)
     return s:find('"""') ~= nil and e:find('"""') ~= nil
 end
 
-local function ismainfunc(s, e)
+local function is_doc_and_body(s, e)
+    return s:find('"""') ~= nil and e:find('"""') == nil
+end
+
+local function is_main_func(s, e)
     return s:find('__main__') ~= nil and s:find('__name__') ~= nil
 end
 
@@ -67,14 +71,21 @@ function M.foldtext(lstart, lend, dashes)
     local s = fn.getline(lstart)
     local e = fn.getline(lend)
 
-    if isdocfold(s, e) then
-        return s:gsub('"""%s*$', '""" ... """' )
+    if is_doc_fold(s, e) then
+        -- replace """ with |, if nothing after | on same line,
+        -- replace that with | doc
+        return s:gsub('"""', 'o' ):gsub('o%s*$', 'o  doc')
 
-    elseif ismainfunc(s, e) then
+    elseif is_doc_and_body(s, e) then
+        -- replace """ with |, if noting after | on same line,
+        -- replace that with "| doc, body"
+        return s:gsub('"""', 'o▶'):gsub('o▶%s*$', 'o▶  doc, body')
+
+    elseif is_main_func(s, e) then
         return s
 
     else
-        return s:gsub('[^%s].*$', '{ ... }')
+        return s:gsub('[^%s].*$', '▶  body ')
     end
 end
 
