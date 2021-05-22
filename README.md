@@ -1,8 +1,10 @@
-# nvim-treesitter-pyfold (WIP)
-A lua based module for nvim-treesitter, sets sane folding defaults and provides
-an optional foldtext.
+# nvim-treesitter-pyfold
+Folding is a great way to declutter the screen from irrelevant context but
+overfolding can be equally annoying.
+Hence, a lua based module for nvim-treesitter, setting some sane folding 
+defaults and provides an optional foldtext.
 
-### Installation
+## Installation
 Using your favourite package manager
 ```lua
 # vim-plug
@@ -29,12 +31,18 @@ require('nvim-treesitter.configs').setup {
 }
 ```
 
-### Example
-![Example of folding](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/folding.png)
+## Example
+#### Classes
+![Classes folding](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Classes_Folding.png)
+#### Funcitons / Methods
+![Functions example](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Functions_example.png)
+![Multline signature](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Multiline_signature.png)
+![Functions Based on Docs present](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Function_based_on_doc.png)
+#### Dicts, Lists, Tuples
+![Dicts, Lists, Tuples folding](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/listlikes.png)
 
 ### TODO
-* Getting multiple imports to fold into one line, if anyone is aware how to do
-    this with treesitter, please feel free to drop an issue!
+* Getting multiple imports to fold into one line.
 ```Python
 # Code
 import one
@@ -50,24 +58,6 @@ from z import (
 -- imports
 ```
 
-* List, Dict folding
-```Python
-# Code
-my_dict = {
-    'k1' : 'v1'
-    'k2' : 'v2'
-}
-
-my_list = [
-    'item1',
-    'item2'
-]
-
-# Desired
-my_dict = { ... }
-
-my_list = [ ... ]
-```
-
-
-
+The C part of the python tree-sitter parser doesn't want to fold any 
+'queryable' that only lives on one line, even if you group multiple of them
+together in query. Please let me know if you know of any workaround for this!

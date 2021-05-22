@@ -67,6 +67,18 @@ local function is_main_func(s, e)
     return s:find('__main__') ~= nil and s:find('__name__') ~= nil
 end
 
+local function is_dict(s, e)
+    return s:find('{') ~= nil and e:find('}%s*$') ~= nil
+end
+
+local function is_list(s, e)
+    return s:find('%[') ~= nil and e:find('%]%s*$') ~= nil
+end
+
+local function is_tuple(s, e)
+    return s:find('%(') ~= nil and e:find('%)%s*$') ~= nil
+end
+
 function M.foldtext(lstart, lend, dashes)
     local s = fn.getline(lstart)
     local e = fn.getline(lend)
@@ -83,6 +95,18 @@ function M.foldtext(lstart, lend, dashes)
 
     elseif is_main_func(s, e) then
         return s
+
+    elseif is_dict(s, e) then
+        local nlines = tostring(lend - lstart - 1)
+        return s:gsub('{.*$', '{ ... } ('..nlines..')')
+
+    elseif is_list(s, e) then
+        local nlines = tostring(lend - lstart -1)
+        return s:gsub('%[.*$', '[ ... ] ('..nlines..')')
+
+    elseif is_tuple(s, e) then
+        local nlines = tostring(lend - lstart -1)
+        return s:gsub('%(.*$', '( ... ) ('..nlines..')')
 
     else
         return s:gsub('[^%s].*$', '▶  body ')

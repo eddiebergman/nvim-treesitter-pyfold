@@ -36,6 +36,28 @@
     ) @fold
 )
 
+; Fold dicts
+(expression_statement
+    (assignment
+        right: (dictionary)
+    ) @fold
+)
+
+; Fold lists
+(expression_statement
+    (assignment
+        right: (list)
+    ) @fold
+)
+
+; Fold Tuples
+(expression_statement
+    (assignment
+        right: (tuple)
+    ) @fold
+)
+
+
 ; Old default folds
 ;(while_statement (block) @fold)
 ;(for_statement (block) @fold)
