@@ -34,7 +34,7 @@ require('nvim-treesitter.configs').setup {
 ## Example
 #### Classes
 ![Classes folding](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Classes_Folding.png)
-#### Funcitons / Methods
+#### Functions / Methods
 ![Functions example](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Functions_example.png)
 ![Multline signature](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Multiline_signature.png)
 ![Functions Based on Docs present](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Function_based_on_doc.png)
