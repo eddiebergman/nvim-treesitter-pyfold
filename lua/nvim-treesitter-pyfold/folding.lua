@@ -68,15 +68,15 @@ local function is_main_func(s, e)
 end
 
 local function is_dict(s, e)
-    return s:find('{') ~= nil and e:find('}%s*$') ~= nil
+    return s:find('{%s*$') ~= nil and e:find('}%s*$') ~= nil
 end
 
 local function is_list(s, e)
-    return s:find('%[') ~= nil and e:find('%]%s*$') ~= nil
+    return s:find('%[%s*$') ~= nil and e:find('%]%s*$') ~= nil
 end
 
 local function is_tuple(s, e)
-    return s:find('%(') ~= nil and e:find('%)%s*$') ~= nil
+    return s:find('%(%s*$') ~= nil and e:find('%)%s*$') ~= nil
 end
 
 function M.foldtext(lstart, lend, dashes)
@@ -91,22 +91,23 @@ function M.foldtext(lstart, lend, dashes)
     elseif is_doc_and_body(s, e) then
         -- replace """ with |, if noting after | on same line,
         -- replace that with "| doc, body"
+        --
         return s:gsub('"""', 'o▶'):gsub('o▶%s*$', 'o▶  doc, body')
 
     elseif is_main_func(s, e) then
         return s
 
     elseif is_dict(s, e) then
-        local nlines = tostring(lend - lstart - 1)
-        return s:gsub('{.*$', '{ ... } ('..nlines..')')
+        local nlines = tostring(lend - lstart -1)
+        return s:gsub('{.*$', '{ ... }')..' ('..nlines..')'
 
     elseif is_list(s, e) then
         local nlines = tostring(lend - lstart -1)
-        return s:gsub('%[.*$', '[ ... ] ('..nlines..')')
+        return s:gsub('%[.*$', '[ ... ]')..' ('..nlines..')'
 
     elseif is_tuple(s, e) then
         local nlines = tostring(lend - lstart -1)
-        return s:gsub('%(.*$', '( ... ) ('..nlines..')')
+        return s:gsub('%(.*$', '( ... )')..' ('..nlines..')'
 
     else
         return s:gsub('[^%s].*$', '▶  body ')
