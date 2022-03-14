@@ -31,6 +31,14 @@ require('nvim-treesitter.configs').setup {
 }
 ```
 
+If you havn't already, to use treesitter folding, you have to set the following two lines in your `.vimrc` at some point.
+```
+set foldmethod=expr
+set foldexpr=nvim_treesitter#fold_expr()
+```
+
+For debuging issues, make these two lines are set using `set foldmethod` and `set foldexpr` to verify these are set.
+
 ## Example
 #### Classes
 ![Classes folding](https://github.com/eddiebergman/nvim-treesitter-pyfold/blob/master/images/Classes_Folding.png)
