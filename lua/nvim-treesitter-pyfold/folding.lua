@@ -86,13 +86,21 @@ function M.foldtext(lstart, lend, dashes)
     if is_doc_fold(s, e) then
         -- replace """ with |, if nothing after | on same line,
         -- replace that with | doc
-        return s:gsub('"""', 'o' ):gsub('o%s*$', 'o  doc')
+        local s2 = s
+        if lstart ~= lend and s:find('"""%s*$') ~= nil then
+            s2 = s:gsub('"""', 'o ') .. fn.getline(lstart+1):match("^%s*(.-)%s*$")
+        end
+        return s2:gsub('"""%s*', 'o ' ):gsub('o%s*$', 'o  doc')
 
     elseif is_doc_and_body(s, e) then
         -- replace """ with |, if noting after | on same line,
         -- replace that with "| doc, body"
         --
-        return s:gsub('"""', 'o▶'):gsub('o▶%s*$', 'o▶  doc, body')
+        local s2 = s
+        if lstart ~= lend and s:find('"""%s*$') ~= nil then
+            s2 = s:gsub('"""', 'o ') .. fn.getline(lstart+1):match("^%s*(.-)%s*$")
+        end
+        return s2:gsub('"""%s*', 'o▶ '):gsub('o▶%s*$', 'o▶  doc, body')
 
     elseif is_main_func(s, e) then
         return s
