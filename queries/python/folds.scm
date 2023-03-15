@@ -57,6 +57,12 @@
     ) @fold
 )
 
+; Fold multiline decorators
+(decorator
+    (call
+    ) @fold
+)
+
 
 ; Old default folds
 ;(while_statement (block) @fold)
