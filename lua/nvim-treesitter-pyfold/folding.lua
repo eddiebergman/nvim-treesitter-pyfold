@@ -32,7 +32,14 @@ function M.attach(bufnr, lang)
 
     -- Set fold regions
     local fold_query = readfile(folds_path())
-    queries.set_query('python', 'folds', fold_query)
+
+    local version = vim.version()
+    fold_query = fold_query:gsub('fold', 'foldopen')
+    if version and version.major == 0 and version.minor >= 9 then
+        queries.set('python', 'folds', fold_query)
+    else
+        queries.set_query('python', 'folds', fold_query)
+    end
 
     -- Change to custom foldtext
     if config.custom_foldtext == true then
